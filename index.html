@@ -263,76 +263,131 @@ section { scroll-margin-top: 60px; }
   font-weight: 300;
 }
 
-/* ── GALLERY ── */
-#gallery { background: #2A3539; padding: 5rem 0; }
+/* ── GALLERY / CAROUSEL ── */
+#gallery { background: #2A3539; padding: 4rem 0; }
 
 .gallery-header {
   max-width: 1200px; margin: 0 auto;
-  padding: 0 3rem 2.5rem;
+  padding: 0 3rem 2rem;
   display: flex; align-items: baseline; justify-content: space-between;
 }
 .gallery-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  font-weight: 400;
-  color: #fff;
+  font-size: 1.8rem; font-weight: 400; color: #fff;
 }
 .gallery-subtitle {
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  font-size: 0.7rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
 }
 
-.gallery-grid {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 3rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto auto;
-  gap: 3px;
+/* Carousel wrapper */
+.carousel-wrap { max-width: 1200px; margin: 0 auto; padding: 0 3rem; position: relative; }
+.carousel-viewport { overflow: hidden; position: relative; border: 1px solid rgba(201,169,110,0.12); }
+.carousel-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
 }
-
-.gallery-cell {
-  background: #1a2328;
-  aspect-ratio: 4/3;
+.carousel-slide {
+  min-width: 100%; aspect-ratio: 16/9;
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-  position: relative;
+  position: relative; overflow: hidden;
+  background: #1a2328;
+  flex-shrink: 0;
 }
-.gallery-cell.tall { grid-row: span 2; aspect-ratio: unset; }
+.carousel-slide img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
 
-.gallery-placeholder {
-  width: 100%; height: 100%; min-height: 220px;
+/* Placeholder slides (swap with <img> when photos are ready) */
+.carousel-placeholder {
+  width: 100%; height: 100%;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 0.6rem;
+  align-items: center; justify-content: center; gap: 0.75rem;
   background: linear-gradient(135deg, #1f2d30, #2A3539);
-  border: 1px solid rgba(201,169,110,0.08);
-  position: relative;
-  overflow: hidden;
 }
-.gallery-placeholder::before {
+.carousel-placeholder::before {
   content: '';
   position: absolute; inset: 0;
-  background:
-    repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(201,169,110,0.03) 15px);
+  background: repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(201,169,110,0.03) 15px);
 }
-.gallery-photo-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(201,169,110,0.5);
-  z-index: 1;
+.carousel-icon { font-size: 2.5rem; opacity: 0.2; z-index: 1; }
+.carousel-label {
+  font-size: 0.62rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(201,169,110,0.5); z-index: 1;
 }
-.gallery-icon { font-size: 2rem; opacity: 0.2; z-index: 1; }
+
+/* Arrows */
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(201,169,110,0.85); border: none; color: #fff;
+  width: 44px; height: 44px; border-radius: 0;
+  font-size: 1.4rem; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; z-index: 10;
+}
+.carousel-btn:hover { background: #c9a96e; }
+.carousel-prev { left: 0.75rem; }
+.carousel-next { right: 0.75rem; }
+
+/* Counter */
+.carousel-counter {
+  position: absolute; bottom: 0.75rem; right: 0.75rem;
+  background: rgba(0,0,0,0.5); color: #fff;
+  font-size: 0.65rem; letter-spacing: 0.12em;
+  padding: 0.3rem 0.6rem; z-index: 10;
+}
+
+/* Dots */
+.carousel-dots {
+  display: flex; justify-content: center; gap: 0.5rem;
+  padding: 1.25rem 0 0;
+}
+.carousel-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%; border: 1px solid rgba(201,169,110,0.5);
+  background: transparent; cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+.carousel-dot.active { background: #c9a96e; border-color: #c9a96e; }
+
+/* Thumbnails */
+.carousel-thumbs {
+  display: flex; gap: 4px; margin-top: 4px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.carousel-thumbs::-webkit-scrollbar { display: none; }
+.carousel-thumb {
+  min-width: 80px; height: 54px; cursor: pointer;
+  background: #1a2328; border: 2px solid transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; opacity: 0.5; transition: all 0.2s;
+  flex-shrink: 0; overflow: hidden;
+}
+.carousel-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.carousel-thumb.active { border-color: #c9a96e; opacity: 1; }
+.carousel-thumb:hover { opacity: 0.85; }
 
 .gallery-note {
-  max-width: 1200px; margin: 2rem auto 0;
+  max-width: 1200px; margin: 1.5rem auto 0;
   padding: 0 3rem;
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.05em;
+  font-size: 0.72rem; color: rgba(255,255,255,0.3); letter-spacing: 0.05em;
+}
+
+@media (max-width: 860px) {
+  .carousel-wrap { padding: 0 1.5rem; }
+  .gallery-header { padding: 0 1.5rem 1.5rem; }
+  .gallery-note { padding: 0 1.5rem; }
+  .carousel-thumb { min-width: 60px; height: 42px; }
+}
+@media (max-width: 480px) {
+  .carousel-wrap { padding: 0; }
+  .gallery-header { padding: 0 1.2rem 1.2rem; }
+  .carousel-btn { width: 36px; height: 36px; font-size: 1.1rem; }
+  .carousel-thumb { min-width: 52px; height: 36px; }
+  .gallery-note { padding: 0 1.2rem; }
 }
 
 /* ── NEIGHBORHOOD ── */
@@ -667,8 +722,6 @@ footer {
   .details-layout, .neighborhood-layout, .schedule-layout, .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
   .details-body { grid-template-columns: 1fr !important; }
   .features-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; padding: 0 1.5rem; }
-  .gallery-cell.tall { grid-row: auto; }
   .gallery-header { padding: 0 1.5rem 2rem; }
   .gallery-note { padding: 0 1.5rem; }
   .footer-inner { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
@@ -700,7 +753,6 @@ footer {
   .features-grid { grid-template-columns: 1fr !important; }
 
   /* Gallery: single column */
-  .gallery-grid { grid-template-columns: 1fr !important; padding: 0 1.2rem !important; }
 
   /* Contact form: name + phone stack */
   #contact-form > div:first-of-type { grid-template-columns: 1fr !important; }
@@ -789,47 +841,91 @@ footer {
 <!-- GALLERY -->
 <section id="gallery">
   <div class="gallery-header">
-    <div class="gallery-title">All Property Photos</div>
-    <div class="gallery-subtitle">Add photos once available</div>
+    <div class="gallery-title">Property Photos</div>
+    <div class="gallery-subtitle">6 Photos</div>
   </div>
-  <div class="gallery-grid">
-    <div class="gallery-cell tall">
-      <div class="gallery-placeholder">
-        <div class="gallery-icon">🏙️</div>
-        <div class="gallery-photo-label">Living Room / View</div>
+
+  <div class="carousel-wrap">
+    <!-- Main viewport -->
+    <div class="carousel-viewport" id="carouselViewport">
+      <div class="carousel-track" id="carouselTrack">
+
+        <div class="carousel-slide">
+          <!-- Replace with: <img src="photo1.jpg" alt="Living Room"> -->
+          <div class="carousel-placeholder">
+            <div class="carousel-icon">🏙️</div>
+            <div class="carousel-label">Living Room / View</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <!-- Replace with: <img src="photo2.jpg" alt="Kitchen"> -->
+          <div class="carousel-placeholder">
+            <div class="carousel-icon">🍳</div>
+            <div class="carousel-label">Kitchen</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <!-- Replace with: <img src="photo3.jpg" alt="Primary Bedroom"> -->
+          <div class="carousel-placeholder">
+            <div class="carousel-icon">🛏️</div>
+            <div class="carousel-label">Primary Bedroom</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <!-- Replace with: <img src="photo4.jpg" alt="Bathroom"> -->
+          <div class="carousel-placeholder">
+            <div class="carousel-icon">🚿</div>
+            <div class="carousel-label">Bathroom</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <!-- Replace with: <img src="photo5.jpg" alt="Balcony"> -->
+          <div class="carousel-placeholder">
+            <div class="carousel-icon">🌅</div>
+            <div class="carousel-label">Balcony</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <!-- Replace with: <img src="photo6.jpg" alt="Building Amenities"> -->
+          <div class="carousel-placeholder">
+            <div class="carousel-icon">🏊</div>
+            <div class="carousel-label">Building Amenities</div>
+          </div>
+        </div>
+
       </div>
+
+      <button class="carousel-btn carousel-prev" onclick="carouselMove(-1)" aria-label="Previous">&#8249;</button>
+      <button class="carousel-btn carousel-next" onclick="carouselMove(1)" aria-label="Next">&#8250;</button>
+      <div class="carousel-counter"><span id="carouselCurrent">1</span> / <span id="carouselTotal">6</span></div>
     </div>
-    <div class="gallery-cell">
-      <div class="gallery-placeholder">
-        <div class="gallery-icon">🍳</div>
-        <div class="gallery-photo-label">Kitchen</div>
-      </div>
+
+    <!-- Thumbnails -->
+    <div class="carousel-thumbs" id="carouselThumbs">
+      <div class="carousel-thumb active" onclick="carouselGo(0)">🏙️</div>
+      <div class="carousel-thumb" onclick="carouselGo(1)">🍳</div>
+      <div class="carousel-thumb" onclick="carouselGo(2)">🛏️</div>
+      <div class="carousel-thumb" onclick="carouselGo(3)">🚿</div>
+      <div class="carousel-thumb" onclick="carouselGo(4)">🌅</div>
+      <div class="carousel-thumb" onclick="carouselGo(5)">🏊</div>
     </div>
-    <div class="gallery-cell">
-      <div class="gallery-placeholder">
-        <div class="gallery-icon">🛏️</div>
-        <div class="gallery-photo-label">Primary Bedroom</div>
-      </div>
-    </div>
-    <div class="gallery-cell">
-      <div class="gallery-placeholder">
-        <div class="gallery-icon">🚿</div>
-        <div class="gallery-photo-label">Bathroom</div>
-      </div>
-    </div>
-    <div class="gallery-cell">
-      <div class="gallery-placeholder">
-        <div class="gallery-icon">🌅</div>
-        <div class="gallery-photo-label">Balcony</div>
-      </div>
-    </div>
-    <div class="gallery-cell">
-      <div class="gallery-placeholder">
-        <div class="gallery-icon">🏊</div>
-        <div class="gallery-photo-label">Building Amenities</div>
-      </div>
+
+    <!-- Dots -->
+    <div class="carousel-dots" id="carouselDots">
+      <button class="carousel-dot active" onclick="carouselGo(0)"></button>
+      <button class="carousel-dot" onclick="carouselGo(1)"></button>
+      <button class="carousel-dot" onclick="carouselGo(2)"></button>
+      <button class="carousel-dot" onclick="carouselGo(3)"></button>
+      <button class="carousel-dot" onclick="carouselGo(4)"></button>
+      <button class="carousel-dot" onclick="carouselGo(5)"></button>
     </div>
   </div>
+
   <div class="gallery-note">Photos will be added once property is ready for market. Contact the listing agent for a private preview.</div>
 </section>
 
@@ -1039,6 +1135,47 @@ footer {
       btn.textContent = '✉ Send Message';
     });
   }
+
+  // ── Carousel ──
+  let carouselIdx = 0;
+  const carouselSlides = document.querySelectorAll('.carousel-slide');
+  const carouselDots   = document.querySelectorAll('.carousel-dot');
+  const carouselThumbs = document.querySelectorAll('.carousel-thumb');
+  const carouselTotal  = carouselSlides.length;
+
+  function carouselUpdate() {
+    document.getElementById('carouselTrack').style.transform = `translateX(-${carouselIdx * 100}%)`;
+    document.getElementById('carouselCurrent').textContent = carouselIdx + 1;
+    carouselDots.forEach((d, i)  => d.classList.toggle('active', i === carouselIdx));
+    carouselThumbs.forEach((t, i) => t.classList.toggle('active', i === carouselIdx));
+    // scroll active thumb into view
+    carouselThumbs[carouselIdx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  function carouselMove(dir) {
+    carouselIdx = (carouselIdx + dir + carouselTotal) % carouselTotal;
+    carouselUpdate();
+  }
+
+  function carouselGo(idx) {
+    carouselIdx = idx;
+    carouselUpdate();
+  }
+
+  // Touch / swipe support
+  let touchStartX = 0;
+  const vp = document.getElementById('carouselViewport');
+  vp.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  vp.addEventListener('touchend',   e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) carouselMove(diff > 0 ? 1 : -1);
+  });
+
+  // Keyboard arrow support
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  carouselMove(-1);
+    if (e.key === 'ArrowRight') carouselMove(1);
+  });
 
   // Hamburger
   document.getElementById('hamburger').addEventListener('click', function() {
