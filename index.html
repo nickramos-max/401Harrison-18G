@@ -933,7 +933,7 @@ footer {
       </div>
 
       <div id="form-success" style="display:none; margin-top:1.5rem; background:#f0f7f0; border:1px solid #b2d8b2; color:#2d6a2d; padding:1rem 1.5rem; font-size:0.9rem; line-height:1.6; text-align:center;">
-        ✅ Your email client will open with your message ready to send.
+        ✅ Thank you! Your message has been sent. We'll be in touch shortly.
       </div>
     </form>
   </div>
@@ -951,32 +951,47 @@ footer {
 </footer>
 
 <script>
-  // Contact form — builds a mailto: link from form data, no backend needed
+  // Contact form — submits via Web3Forms
   function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    const name    = form.querySelector('[name="name"]').value.trim();
-    const email   = form.querySelector('[name="email"]').value.trim();
-    const phone   = form.querySelector('[name="phone"]').value.trim();
-    const message = form.querySelector('[name="message"]').value.trim();
+    const btn  = form.querySelector('button[type="submit"]');
 
-    const body = [
-      'Name: ' + name,
-      'Email: ' + email,
-      phone ? 'Phone: ' + phone : '',
-      '',
-      'Message:',
-      message
-    ].filter(Boolean).join('\n');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
 
-    const mailto =
-      'mailto:nickramos@christiesrealestatenorcal.com' +
-      '?cc=lynn%40christiesrealestatenorcal.com' +
-      '&subject=' + encodeURIComponent('Inquiry: 401 Harrison St #18G') +
-      '&body=' + encodeURIComponent(body);
+    const payload = {
+      access_key: '7f327233-8fce-4d4f-8d73-efa9f4c716ae',
+      subject:    'Inquiry: 401 Harrison St #18G',
+      from_name:  '401 Harrison St #18G Website',
+      name:       form.querySelector('[name="name"]').value.trim(),
+      email:      form.querySelector('[name="email"]').value.trim(),
+      phone:      form.querySelector('[name="phone"]').value.trim(),
+      message:    form.querySelector('[name="message"]').value.trim()
+    };
 
-    document.getElementById('form-success').style.display = 'block';
-    window.location.href = mailto;
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('form-success').style.display = 'block';
+        form.querySelectorAll('input, textarea').forEach(i => { i.value = ''; });
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    })
+    .catch(err => {
+      alert('Sorry, there was a problem sending your message. Please call (415) 993-9113.');
+      console.error(err);
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = '✉ Send Message';
+    });
   }
 
   // Hamburger
