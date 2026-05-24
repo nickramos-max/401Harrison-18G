@@ -904,13 +904,7 @@ footer {
     <h2 class="section-title" style="margin-bottom:1rem;">Interested in This Property?</h2>
     <p style="font-size:1rem; color:#555; font-weight:300; margin-bottom:2.5rem; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.75;">Contact Nicholas or Lynn directly to schedule a private showing or ask any questions about 401 Harrison St #18G.</p>
 
-    <form id="contact-form" action="https://formsubmit.co/nickramos@christiesrealestatenorcal.com" method="POST" style="max-width:540px; margin:0 auto; text-align:left;">
-      <!-- Hidden fields for FormSubmit.co -->
-      <input type="hidden" name="_subject" value="Inquiry: 401 Harrison St #18G">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://401harrison18g.com/thanks.html">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_cc" value="lynn@christiesrealestatenorcal.com">
+    <form id="contact-form" onsubmit="handleSubmit(event)" style="max-width:540px; margin:0 auto; text-align:left;">
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
         <div>
@@ -937,6 +931,10 @@ footer {
         <button type="submit" class="btn-dark">✉ Send Message</button>
         <a href="tel:4159939113" class="btn-outline">📞 (415) 993-9113</a>
       </div>
+
+      <div id="form-success" style="display:none; margin-top:1.5rem; background:#f0f7f0; border:1px solid #b2d8b2; color:#2d6a2d; padding:1rem 1.5rem; font-size:0.9rem; line-height:1.6; text-align:center;">
+        ✅ Your email client will open with your message ready to send.
+      </div>
     </form>
   </div>
 </section>
@@ -953,6 +951,34 @@ footer {
 </footer>
 
 <script>
+  // Contact form — builds a mailto: link from form data, no backend needed
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const name    = form.querySelector('[name="name"]').value.trim();
+    const email   = form.querySelector('[name="email"]').value.trim();
+    const phone   = form.querySelector('[name="phone"]').value.trim();
+    const message = form.querySelector('[name="message"]').value.trim();
+
+    const body = [
+      'Name: ' + name,
+      'Email: ' + email,
+      phone ? 'Phone: ' + phone : '',
+      '',
+      'Message:',
+      message
+    ].filter(Boolean).join('\n');
+
+    const mailto =
+      'mailto:nickramos@christiesrealestatenorcal.com' +
+      '?cc=lynn%40christiesrealestatenorcal.com' +
+      '&subject=' + encodeURIComponent('Inquiry: 401 Harrison St #18G') +
+      '&body=' + encodeURIComponent(body);
+
+    document.getElementById('form-success').style.display = 'block';
+    window.location.href = mailto;
+  }
+
   // Hamburger
   document.getElementById('hamburger').addEventListener('click', function() {
     document.getElementById('nav-links').classList.toggle('open');
