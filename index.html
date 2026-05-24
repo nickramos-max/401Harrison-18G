@@ -995,21 +995,32 @@ footer {
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    const data = new FormData(form);
+    // Build JSON payload (FormSubmit AJAX endpoint requires JSON)
+    const payload = {
+      name:    form.querySelector('[name="name"]').value,
+      email:   form.querySelector('[name="email"]').value,
+      phone:   form.querySelector('[name="phone"]').value,
+      message: form.querySelector('[name="message"]').value,
+      _subject: 'Inquiry: 401 Harrison St #18G'
+    };
 
-    fetch('https://formsubmit.co/' + recipient, {
+    fetch('https://formsubmit.co/ajax/' + recipient, {
       method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
     })
-    .then(res => {
-      if (res.ok) {
+    .then(res => res.json())
+    .then(data => {
+      if (data.success === 'true' || data.success === true) {
         document.getElementById('form-success').style.display = 'block';
         form.querySelectorAll('input, textarea').forEach(i => { i.value = ''; });
         btn.textContent = '✉ Send Message';
         btn.disabled = false;
       } else {
-        throw new Error('Network response was not ok');
+        throw new Error('Submission failed');
       }
     })
     .catch(() => {
