@@ -95,8 +95,7 @@ section{scroll-margin-top:var(--nav-h);}
 #details{background:var(--cream);}
 .details-body{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start;}
 .details-description p{font-size:1rem;line-height:1.9;color:var(--text-mid);font-weight:300;margin-bottom:1.3rem;}
-.read-more-btn{background:none;border:none;color:var(--gold);font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;cursor:pointer;padding:0;transition:opacity 0.25s;}
-.read-more-btn:hover{opacity:0.65;}
+
 .key-facts{background:#fff;border:1px solid rgba(0,0,0,0.07);padding:2.25rem;}
 .key-facts-header{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(0,0,0,0.06);}
 .key-fact-row{display:flex;justify-content:space-between;align-items:center;padding:0.8rem 0;border-bottom:1px solid rgba(0,0,0,0.05);}
@@ -398,11 +397,10 @@ footer{background:var(--coal);border-top:1px solid rgba(255,255,255,0.04);}
       <div class="details-description reveal rd2">
         <p>Experience elevated city living at The Harrison in this beautifully designed one-bedroom, one-bath residence showcasing sweeping Twin Peaks and Bay water views through dramatic floor-to-ceiling windows.</p>
         <p>Thoughtfully appointed with brand-new hardwood flooring, premium appliances, and signature Waterworks brass fixtures, this sophisticated home blends timeless luxury with modern comfort. A private balcony off the primary bedroom frames the city skyline.</p>
-        <div id="desc-more" style="display:none">
+        
           <p>Located in the heart of Rincon Hill, the residence offers convenient access to transportation, the Financial District, Downtown, the Embarcadero, the Ferry Building, world-class dining, museums, and San Francisco&rsquo;s vibrant waterfront lifestyle.</p>
           <p>The building&rsquo;s interiors were designed by acclaimed San Francisco designer Ken Fulk, establishing The Harrison as a premier full-service luxury high-rise. Residents enjoy a 24-hour attended lobby and valet service, along with Uncle Harry&rsquo;s &mdash; a spectacular 49th-floor residents&rsquo; lounge featuring a bar, dining salon, parlor, speakeasy, and panoramic Bay Bridge and water views. Additional amenities include a heated outdoor pool terrace with BBQ area, a fitness center, wine storage, and a signature breakfast pantry with complimentary coffee service.</p>
-        </div>
-        <button class="read-more-btn" onclick="toggleDesc()" id="read-more-btn">Read more &darr;</button>
+        
       </div>
       <div class="key-facts reveal rd3">
         <div class="key-facts-header">Key Details</div>
@@ -776,13 +774,6 @@ window.addEventListener('scroll', () => {
   });
 }, {passive:true});
 
-function toggleDesc() {
-  const more = document.getElementById('desc-more');
-  const btn = document.getElementById('read-more-btn');
-  const hidden = !more.style.display || more.style.display === 'none';
-  more.style.display = hidden ? 'block' : 'none';
-  btn.innerHTML = hidden ? 'Read less &uarr;' : 'Read more &darr;';
-}
 
 function handleSubmit(e) {
   e.preventDefault();
