@@ -72,8 +72,8 @@ h1.hero-subaddress{font-family:var(--font-display);font-size:clamp(2.4rem,5.5vw,
 
 /* STATS TICKER */
 #stats-ticker{background:var(--teal);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.stats-ticker-inner{max-width:1280px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:repeat(5,1fr);}
-.ticker-stat{padding:2rem 1.5rem;border-right:1px solid rgba(255,255,255,0.06);text-align:center;}
+.stats-ticker-inner{max-width:1280px;margin:0 auto;padding:0 2.5rem;display:flex;justify-content:center;}
+.ticker-stat{padding:2rem 3rem;border-right:1px solid rgba(255,255,255,0.06);text-align:center;}
 .ticker-stat:last-child{border-right:none;}
 .ticker-val{font-family:var(--font-display);font-size:2.1rem;color:var(--gold);display:block;line-height:1;margin-bottom:0.45rem;letter-spacing:-0.01em;}
 .ticker-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.38);font-weight:500;}
@@ -280,7 +280,7 @@ footer{background:var(--coal);border-top:1px solid rgba(255,255,255,0.04);}
   .hero-content{flex-direction:column;align-items:flex-start;}
   .hero-price-block{text-align:left;border-left:none;border-top:1px solid rgba(200,169,110,0.25);padding-left:0;padding-top:2rem;width:100%;}
   .hero-cta-group{flex-direction:row;justify-content:flex-start;}
-  .stats-ticker-inner{grid-template-columns:repeat(3,1fr);}
+  .stats-ticker-inner{}
   .ticker-stat:nth-child(4),.ticker-stat:nth-child(5){display:none;}
   .section-inner{padding:4rem 1.5rem;}
   .details-body,.neighborhood-layout,.schedule-layout,.contact-layout{grid-template-columns:1fr;gap:2.5rem;}
@@ -306,7 +306,7 @@ footer{background:var(--coal);border-top:1px solid rgba(255,255,255,0.04);}
   .hero-stats-row{gap:1.5rem;flex-wrap:wrap;}
   .hero-price{font-size:2.2rem;}
   .hero-cta-group{flex-direction:column;}
-  .stats-ticker-inner{grid-template-columns:repeat(2,1fr);}
+  .stats-ticker-inner{}
   .ticker-stat:nth-child(3),.ticker-stat:nth-child(4),.ticker-stat:nth-child(5){display:none;}
   .features-grid{grid-template-columns:1fr;}
   .amenities-grid{grid-template-columns:1fr;}
