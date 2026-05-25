@@ -84,7 +84,7 @@ section{scroll-margin-top:var(--nav-h);}
 .section-eyebrow{display:flex;align-items:center;gap:1rem;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;font-weight:700;}
 .section-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold);flex-shrink:0;}
 .section-title{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:400;color:var(--coal);margin-bottom:3rem;line-height:1.15;letter-spacing:-0.01em;}
-.section-title--light{color:#fff;}
+.section-title--light{color:var(--coal);}
 
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease;}
@@ -159,18 +159,18 @@ section{scroll-margin-top:var(--nav-h);}
 .lightbox-counter{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:0.72rem;letter-spacing:0.15em;color:rgba(255,255,255,0.35);font-weight:500;}
 
 /* AMENITIES */
-#amenities{background:var(--teal);}
+#amenities{background:#fff;}
 .amenities-intro{max-width:600px;margin-bottom:3.5rem;}
-.amenities-intro p{font-size:0.95rem;line-height:1.85;color:rgba(255,255,255,0.55);font-weight:300;}
-.amenities-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.05);}
-.amenity-card{background:var(--teal);padding:2.5rem 2rem;transition:background 0.3s;}
-.amenity-card:hover{background:var(--teal-mid);}
-.amenity-card--featured{background:rgba(200,169,110,0.07);border:1px solid rgba(200,169,110,0.14);}
+.amenities-intro p{font-size:0.95rem;line-height:1.85;color:rgba(26,36,38,0.65);font-weight:300;}
+.amenities-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(0,0,0,0.06);}
+.amenity-card{background:#fff;padding:2.5rem 2rem;transition:background 0.3s;}
+.amenity-card:hover{background:#f5f3ef;}
+.amenity-card--featured{background:rgba(200,169,110,0.08);border:1px solid rgba(200,169,110,0.2);}
 .amenity-card--featured:hover{background:rgba(200,169,110,0.11);}
 .amenity-card--featured .amenity-name{color:var(--gold);}
 .amenity-icon{font-size:2rem;margin-bottom:1rem;display:block;}
-.amenity-name{font-family:var(--font-display);font-size:1.1rem;color:#fff;margin-bottom:0.5rem;font-weight:400;letter-spacing:-0.01em;}
-.amenity-desc{font-size:0.8rem;color:rgba(255,255,255,0.42);line-height:1.65;font-weight:300;}
+.amenity-name{font-family:var(--font-display);font-size:1.1rem;color:var(--coal);margin-bottom:0.5rem;font-weight:400;letter-spacing:-0.01em;}
+.amenity-desc{font-size:0.8rem;color:rgba(26,36,38,0.55);line-height:1.65;font-weight:300;}
 
 /* NEIGHBORHOOD */
 #neighborhood{background:var(--cream);}
