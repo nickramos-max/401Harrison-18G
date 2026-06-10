@@ -121,7 +121,7 @@ section{scroll-margin-top:var(--nav-h);}
 .carousel-viewport{overflow:hidden;position:relative;border:1px solid rgba(200,169,110,0.1);cursor:grab;}
 .carousel-viewport:active{cursor:grabbing;}
 .carousel-track{display:flex;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
-.carousel-slide{min-width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#111d20;flex-shrink:0;}
+.carousel-slide{flex:0 0 100%;width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#111d20;}
 .carousel-slide img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;transition:transform 0.6s ease;background:#0d1618;}
 .carousel-slide:hover img{transform:none;}
 .carousel-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;background:linear-gradient(135deg,#1a2528,#243b3e);}
@@ -705,7 +705,8 @@ const carouselThumbsEls = document.querySelectorAll('.carousel-thumb');
 const carouselTotal = carouselSlides.length;
 
 function carouselUpdate() {
-  document.getElementById('carouselTrack').style.transform = 'translateX(-' + (carouselIdx*100) + '%)';
+  const slideW = document.getElementById('carouselViewport').offsetWidth;
+  document.getElementById('carouselTrack').style.transform = 'translateX(-' + (carouselIdx * slideW) + 'px)';
   document.getElementById('carouselCurrent').textContent = carouselIdx + 1;
   carouselDotsEls.forEach((d,i) => d.classList.toggle('active', i===carouselIdx));
   carouselThumbsEls.forEach((t,i) => t.classList.toggle('active', i===carouselIdx));
